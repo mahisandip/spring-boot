@@ -1,7 +1,6 @@
 package com.emailgateway.vo;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -28,9 +27,6 @@ public class Email implements Serializable {
 	@JsonProperty("recipientEmailAddress")
 	@NotNull
 	private String recipientEmailAddress;
-	
-	@JsonProperty("cc")
-	private List<String> cc;
 	
 	@JsonProperty("emailTopic")
 	@NotNull
@@ -64,14 +60,6 @@ public class Email implements Serializable {
 		this.recipientEmailAddress = recipientEmailAddress;
 	}
 
-	public List<String> getCc() {
-		return cc;
-	}
-
-	public void setCc(List<String> cc) {
-		this.cc = cc;
-	}
-
 	public String getEmailTopic() {
 		return emailTopic;
 	}
@@ -86,6 +74,21 @@ public class Email implements Serializable {
 
 	public void setEmailBody(String emailBody) {
 		this.emailBody = emailBody;
+	}
+	
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(from);
+		sb.append("\n");
+		sb.append(recipientEmailAddress);
+		sb.append("\n\n");
+		sb.append(emailTopic);
+		sb.append("\n");
+		sb.append(emailBody);
+		sb.append("\n");
+		
+		return sb.toString();
 	}
 
 }

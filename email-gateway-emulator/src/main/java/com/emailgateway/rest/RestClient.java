@@ -4,7 +4,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,8 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class RestClient {
 
-	@Autowired
-	private RestTemplate httpsRestTemplate;
+	private RestTemplate httpsRestTemplate = new RestTemplate();
 
 	@PostConstruct
 	void init() {
@@ -27,12 +25,13 @@ public class RestClient {
 		httpsRestTemplate.setErrorHandler(new ResponseErrorHandler());
 	}
 
-	public <R, T> HttpEntity<T> doPostRequest(String url, MultiValueMap<String, String> requestParams, Class<T> clazz,
+	public <R, T> HttpEntity<T> doPostRequest(String hostUrl, String endPoint, MultiValueMap<String, String> requestParams, Class<T> clazz,
 			Map<String, String> httpHeadersMap, R httpBody) {
 
+		StringBuilder url = new StringBuilder(hostUrl + endPoint);
 		UriComponents uriComponents = null;
-
-		if (requestParams != null) {
+		
+		if (!requestParams.isEmpty()) {
 			uriComponents = UriComponentsBuilder.fromHttpUrl(url.toString()).queryParams(requestParams).build();
 		} else {
 			uriComponents = UriComponentsBuilder.fromHttpUrl(url.toString()).build();
@@ -45,6 +44,7 @@ public class RestClient {
 		}
 
 		HttpEntity<?> httpEntity = new HttpEntity<>(httpBody, httpHeaders);
+		
 		return httpsRestTemplate.exchange(uriComponents.encode().toUri(), HttpMethod.POST, httpEntity, clazz);
 
 	}

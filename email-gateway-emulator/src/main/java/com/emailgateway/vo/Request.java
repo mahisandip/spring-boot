@@ -2,6 +2,8 @@ package com.emailgateway.vo;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -15,48 +17,28 @@ public class Request implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@JsonProperty("recepient")
-	private String recepient;
+	@JsonProperty("email")
+	@NotNull
+	private Email email;
 	
-	@JsonProperty("emailTopic")
-	private String emailTopic;
-	
-	@JsonProperty("emailBody")
-	private String emailBody;
-	
-	@JsonProperty("orderId")
-	private Long orderId;
+	@JsonProperty("orderDetails")
+	@NotNull
+	private OrderDetails orderDetails;
 
-	public String getRecepient() {
-		return recepient;
+	public Email getEmail() {
+		return email;
 	}
 
-	public void setRecepient(String recepient) {
-		this.recepient = recepient;
+	public void setEmail(Email email) {
+		this.email = email;
 	}
 
-	public String getEmailTopic() {
-		return emailTopic;
+	public OrderDetails getOrderDetails() {
+		return orderDetails;
 	}
 
-	public void setEmailTopic(String emailTopic) {
-		this.emailTopic = emailTopic;
-	}
-
-	public String getEmailBody() {
-		return emailBody;
-	}
-
-	public void setEmailBody(String emailBody) {
-		this.emailBody = emailBody;
-	}
-
-	public Long getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
+	public void setOrderDetails(OrderDetails orderDetails) {
+		this.orderDetails = orderDetails;
 	}
 	
 }
